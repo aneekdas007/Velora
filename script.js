@@ -1,16 +1,16 @@
 // hardcoded data
 var user = {
-	userID: "user123",
-	name: "John Doe",
-	bio: "Just another person enjoying life.",
-	joinedDate: "January 2025",
-	age: 20,
+	userID: "max.xavier33",
+	name: "Max Xavier",
+	bio: "Just another person enjoying life",
+	joinedDate: "30 September, 2024",
+	age: 19,
 	gender: "Male",
 	currentEducation: "IIT Bhubaneswar",
-	previousEducation: "ABC Public School",
+	previousEducation: "Adamas International School",
 	relationshipStatus: "Single",
 	location: "Bhubaneswar, India",
-	contact: "john@example.com"
+	contact: "max.xavier@gmail.com"
 };
 var savedUser = localStorage.getItem("veloraUser");
 if(savedUser != null)
