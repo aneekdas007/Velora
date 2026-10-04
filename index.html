@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<title>Velora</title>
+</head>
+<body>
+	<div class="contentArea">
+		<div class="topArea">
+			<div class="cover-img">
+				<img src="https://drive.google.com/file/d/1nq6sEyPhUTymF2n63_CGyzkp_bcKiNAm/view?usp=drive_link">
+			</div>
+			<div class="profilePic">
+				<img src="images/selfPfp.png">
+			</div>
+			<div class="user-id">
+				<span id="userID"></span>
+			</div>
+			<div class="name">
+				<span id="name"></span>
+			</div>
+
+			<div class="details">
+				<div class="single-detail" id="postsDetail">
+					Posts
+					<span id="posts"></span>
+				</div>
+				<div class="single-detail" id="followersDetail">
+					Followers
+					<span id="followers"></span>
+				</div>
+				<div class="single-detail" id="followingDetail">
+					Following
+					<span id="following"></span>
+				</div>
+				<div class="single-detail" id="friendsDetail">
+					Friends
+					<span id="friends"></span>
+				</div>
+			</div>
+
+			<div class="bioArea">
+				<span id="bio"></span>
+			</div>
+
+			<div class="btnArea">
+				<button id="followBtn">Follow</button>
+				<button id="messageBtn">Message</button>
+			</div>
+		</div>
+
+		<div class="bottomArea">
+			<div class="bottomNav">
+				<div class="single-nav" id="aboutBtn">
+					About
+				</div>
+				<div class="single-nav" id="photosBtn">
+					Photos
+				</div>
+				<div class="single-nav" id="videosBtn">
+					Videos
+				</div>
+				<div class="single-nav" id="repostsBtn">
+					Reposts
+				</div>
+			</div>
+
+			<div class="displayArea">
+				<!-- ABOUT -->
+				<div id="aboutSection">
+					<div class="sectionTitle">
+						<span>About</span>
+						<button id="editAboutBtn">Edit</button>
+					</div>
+
+					<div class="aboutDetails">
+						<div class="aboutDetail">
+							User ID
+							<span id="aboutUserID"></span>
+							<input type="text" id="editUserID" style="display: none;">
+						</div>
+						<div class="aboutDetail">
+							Name
+							<span id="aboutName"></span>
+							<input type="text" id="editName" style="display: none;">
+						</div>
+						<div class="aboutDetail">
+							Age
+							<span id="aboutAge"></span>
+							<input type="number" id="editAge" style="display: none;">
+						</div>
+						<div class="aboutDetail">
+							Gender
+							<span id="aboutGender"></span>
+							<input type="text" id="editGender" style="display: none;">
+						</div>
+						<div class="aboutDetail">
+							Currently Studying
+							<span id="currentEducation"></span>
+							<input type="text" id="editCurrentEducation" style="display: none;">
+						</div>
+						<div class="aboutDetail">
+							Previously Studied At
+							<span id="previousEducation"></span>
+							<input type="text" id="editPreviousEducation" style="display: none;">
+						</div>
+						<div class="aboutDetail">
+							Relationship Status
+							<span id="relationshipStatus"></span>
+							<input type="text" id="editRelationshipStatus" style="display: none;">
+						</div>
+						<div class="aboutDetail">
+							Location
+							<span id="location"></span>
+							<input type="text" id="editLocation" style="display: none;">
+						</div>
+						<div class="aboutDetail">
+							Contact
+							<span id="contact"></span>
+							<input type="text" id="editContact" style="display: none;">
+						</div>
+						<div class="aboutDetail">
+							Bio
+							<span id="aboutBio"></span>
+							<input type="text" id="editBio" style="display: none;">
+						</div>
+						<div class="aboutDetail">
+							Joined
+							<span id="joinedDate"></span>
+						</div>
+					</div>
+
+					<div id="aboutEditButtons" style="display: none;">
+						<button id="saveAboutBtn">Save</button>
+						<button id="cancelAboutBtn">Cancel</button>
+					</div>
+				</div>
+
+				<!-- PHOTOS -->
+				<div id="photosSection">
+					<div class="sectionTitle">
+						<span>Photos</span>
+						<button id="uploadPhotoBtn">
+							<i class="fa-solid fa-plus"></i>
+							Upload Photo
+						</button>
+						<input type="file" id="photoInput" accept="image/*" style="display: none;">
+					</div>
+					<div class="gallery" id="photosGallery"></div>
+				</div>
+
+				<!-- VIDEOS -->
+				<div id="videosSection">
+					<div class="sectionTitle">Videos</div>
+					<div class="gallery" id="videosGallery"></div>
+				</div>
+
+				<!-- REPOSTS -->
+				<div id="repostsSection">
+					<div class="sectionTitle">Reposts</div>
+					<div class="gallery" id="repostsGallery"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- PEOPLE POPUP -->
+	<div id="popupBackground">
+		<div class="peoplePopup">
+			<div class="popupTop">
+				<span id="popupTitle"></span>
+				<button id="closePopup">X</button>
+			</div>
+			<div id="peopleList"></div>
+		</div>
+	</div>
+
+	<!-- POST POPUP -->
+	<div id="postBackground">
+		<div class="postPopup">
+			<button id="closePost">X</button>
+			<div class="postImage"></div>
+			<div id="postText"></div>
+			<div id="postEditArea" style="display: none;">
+				<textarea id="editCaption" placeholder="Write a caption..."></textarea>
+				<div class="captionButtons">
+					<button id="saveCaptionBtn">Save Caption</button>
+					<button id="cancelCaptionBtn">Cancel</button>
+				</div>
+			</div>
+
+			<div class="postActions">
+				<button id="editCaptionBtn">
+					<i class="fa-solid fa-pen"></i>
+					Edit Caption
+				</button>
+			</div>
+
+			<div class="postStats">
+				<span>
+					<i class="fa-solid fa-heart"></i>
+					<span id="postLikes"></span>
+				</span>
+				<span>
+					<i class="fa-solid fa-comment"></i>
+					<span id="postComments"></span>
+				</span>
+				<span>
+					<i class="fa-solid fa-share"></i>
+					<span id="postShares"></span>
+				</span>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="script.js"></script>
+</body>
+</html>
