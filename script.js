@@ -1,8 +1,6 @@
 /* localStorage Keys :
 	veloraUser
-	veloraPhotoCaptions
-	veloraVideoCaptions
-	veloraUploadedPhotos
+	veloraGallery
 */
 
 // hardcoded data
@@ -19,143 +17,83 @@ var user = {
 	location: "Bhubaneswar, India",
 	contact: "max.xavier@gmail.com"
 };
+
+var allPeople = {
+	followers: [
+		{name: "Rahul Chaurasia", image: "images/others1.png"},
+		{name: "Priya Verma", image: "images/others4.png"},
+		{name: "Brian Smith", image: "images/others2.png"},
+		{name: "Aman Gupta", image: "images/others7.png"},
+		{name: "Harry Stark", image: "images/others3.png"},
+		{name: "Anushka Roy", image: "images/others5.png"}
+	],
+	following: [
+		{name: "Rahul Chaurasia", image: "images/others1.png"},
+		{name: "Brian Smith", image: "images/others2.png"},
+		{name: "Priya Verma", image: "images/others4.png"},
+		{name: "Karan Chatterjee", image: "images/others6.png"},
+		{name: "Anushka Roy", image: "images/others5.png"}
+	],
+	friends: [
+		{name: "Rahul Chaurasia", image: "images/others1.png"},
+		{name: "Brian Smith", image: "images/others2.png"},
+		{name: "Priya Verma", image: "images/others4.png"}
+	]
+};
+
+var galleryData = {
+	photo: [
+		{
+			src: "images/photo1.png", caption: "This is photo 1.", 
+			likes: 120, comments: 15, shares: 8
+		},
+		{
+			src: "images/photo2.png", caption: "This is photo 2.", 
+			likes: 95, comments: 11, shares: 4
+		},
+		{
+			src: "images/photo3.png", caption: "This is photo 3.", 
+			likes: 180, comments: 24, shares: 16
+		},
+		{
+			src: "images/photo4.png", caption: "This is photo 4.", 
+			likes: 75, comments: 6, shares: 3
+		}
+	],
+	video: [
+		{
+			thumbnail: "images/thumbnail1.png", src: "videos/video1.mp4", caption: "This is video 1.", 
+			likes: 210, comments: 32, shares: 20
+		},
+		{
+			thumbnail: "images/thumbnail2.png", src: "videos/video2.mp4", caption: "This is video 2.", 
+			likes: 145, comments: 18, shares: 12
+		}
+	],
+	repost: [
+		{
+			src: "images/repost1.png", caption: "This is repost 1.", 
+			likes: 80, comments: 10, shares: 7
+		},
+		{
+			src: "images/repost2.png", caption: "This is repost 2.", 
+			likes: 130, comments: 17, shares: 11
+		},
+		{
+			src: "images/repost3.png", caption: "This is repost 3.", 
+			likes: 65, comments: 5, shares: 2
+		}
+	]
+}
+// end of hardcoded data
+
 var savedUser = localStorage.getItem("veloraUser");
 if(savedUser != null)
 	user = JSON.parse(savedUser);
 
-var followers = [
-	{
-		name: "Rahul Chaurasia",
-		image: "images/others1.png"
-	},
-	{
-		name: "Priya Verma",
-		image: "images/others4.png"
-	},
-	{
-		name: "Brian Smith",
-		image: "images/others2.png"
-	},
-	{
-		name: "Aman Gupta",
-		image: "images/others7.png"
-	},
-	{
-		name: "Harry Stark",
-		image: "images/others3.png"
-	},
-	{
-		name: "Anushka Roy",
-		image: "images/others5.png"
-	}
-];
-var following = [
-	{
-		name: "Rahul Chaurasia",
-		image: "images/others1.png"
-	},
-	{
-		name: "Brian Smith",
-		image: "images/others2.png"
-	},
-	{
-		name: "Priya Verma",
-		image: "images/others4.png"
-	},
-	{
-		name: "Karan Chatterjee",
-		image: "images/others6.png"
-	},
-	{
-		name: "Anushka Roy",
-		image: "images/others5.png"
-	}
-];
-var friends = [
-	{
-		name: "Rahul Chaurasia",
-		image: "images/others1.png"
-	},
-	{
-		name: "Brian Smith",
-		image: "images/others2.png"
-	},
-	{
-		name: "Priya Verma",
-		image: "images/others4.png"
-	}
-];
-
-var photos = [
-	"images/photo1.png",
-	"images/photo2.png",
-	"images/photo3.png",
-	"images/photo4.png"
-];
-var videos = [
-	{
-		thumbnail: "images/thumbnail1.png",
-		video: "videos/video1.mp4"
-	},
-	{
-		thumbnail: "images/thumbnail2.png",
-		video: "videos/video2.mp4"
-	}
-];
-var reposts = [
-	"images/repost1.png",
-	"images/repost2.png",
-	"images/repost3.png"
-];
-
-var photoTexts = [
-	"This is photo 1.",
-	"This is photo 2.",
-	"This is photo 3.",
-	"This is photo 4."
-];
-var videoTexts = [
-	"This is video 1.",
-	"This is video 2."
-];
-var repostTexts = [
-	"This is repost 1.",
-	"This is repost 2.",
-	"This is repost 3."
-];
-
-var photoLikes = [120, 95, 180, 75];
-var videoLikes = [210, 145];
-var repostLikes = [80, 130, 65];
-var photoComments = [15, 11, 24, 6];
-var videoComments = [32, 18];
-var repostComments = [10, 17, 5];
-var photoShares = [8, 4, 16, 3];
-var videoShares = [20, 12];
-var repostShares = [7, 11, 2];
-// end of hardcoded data
-
-
-var savedPhotoTexts = localStorage.getItem("veloraPhotoCaptions");
-var savedVideoTexts = localStorage.getItem("veloraVideoCaptions");
-if(savedPhotoTexts != null)
-	photoTexts = JSON.parse(savedPhotoTexts);
-if(savedVideoTexts != null)
-	videoTexts = JSON.parse(savedVideoTexts);
-
-var uploadedPhotos = [];
-var savedUploadedPhotos = localStorage.getItem("veloraUploadedPhotos");
-
-if(savedUploadedPhotos != null)
-	uploadedPhotos = JSON.parse(savedUploadedPhotos);
-
-for(var i = 0; i < uploadedPhotos.length; i++) {
-	photos.push(uploadedPhotos[i].image);
-	photoTexts.push(uploadedPhotos[i].caption);
-	photoLikes.push(uploadedPhotos[i].likes);
-	photoComments.push(uploadedPhotos[i].comments);
-	photoShares.push(uploadedPhotos[i].shares);
-}
+var savedGalleryData = localStorage.getItem("veloraGallery");
+if(savedGalleryData != null)
+	galleryData = JSON.parse(savedGalleryData);
 
 function displayUser() {
 	document.getElementById("userID").innerHTML = user.userID;
@@ -176,10 +114,10 @@ function displayUser() {
 
 displayUser();
 
-document.getElementById("followers").innerHTML = followers.length;
-document.getElementById("following").innerHTML = following.length;
-document.getElementById("friends").innerHTML = friends.length;
-document.getElementById("posts").innerHTML = photos.length + videos.length;
+document.getElementById("followers").innerHTML = allPeople.followers.length;
+document.getElementById("following").innerHTML = allPeople.following.length;
+document.getElementById("friends").innerHTML = allPeople.friends.length;
+document.getElementById("posts").innerHTML = galleryData.photo.length + galleryData.video.length;
 
 var photosGallery = document.getElementById("photosGallery");
 var videosGallery = document.getElementById("videosGallery");
@@ -188,47 +126,36 @@ var postBackground = document.getElementById("postBackground");
 var currentPostType = null;
 var currentPostIndex = null;
 
-
 function openPost(type, index) {
 	postBackground.style.display = "flex";
 	currentPostType = type;
 	currentPostIndex = index;
 	var postImage = document.querySelector(".postImage");
 	postImage.innerHTML = "";
-	var image, video = null, text, likes, comments, shares;
+	var text, likes, comments, shares;
+	var selectedGallery;
 
-	if(type == "photo") {
-		image = photos[index];
-		text = photoTexts[index];
-		likes = photoLikes[index];
-		comments = photoComments[index];
-		shares = photoShares[index];
-	}
-	else if(type == "video") {
-		image = videos[index].thumbnail;
-		video = videos[index].video;
-		text = videoTexts[index];
-		likes = videoLikes[index];
-		comments = videoComments[index];
-		shares = videoShares[index];
-	}
-	else if(type == "repost") {
-		image = reposts[index];
-		text = repostTexts[index];
-		likes = repostLikes[index];
-		comments = repostComments[index];
-		shares = repostShares[index];
-	}
+	if(type == "photo")
+		selectedGallery = galleryData.photo;
+	else if(type == "video")
+		selectedGallery = galleryData.video;
+	else if(type == "repost")
+		selectedGallery = galleryData.repost;
 
-	if(video != null) {
+	text = selectedGallery[index].caption;
+	likes = selectedGallery[index].likes;
+	comments = selectedGallery[index].comments;
+	shares = selectedGallery[index].shares;
+
+	if(type == "video") {
 		var videoElement = document.createElement("video");
-		videoElement.src = video;
+		videoElement.src = selectedGallery[index].src;
 		videoElement.controls = true;
 		postImage.appendChild(videoElement);
 	}
 	else {
 		var imageElement = document.createElement("img");
-		imageElement.src = image;
+		imageElement.src = selectedGallery[index].src;
 		postImage.appendChild(imageElement);
 	}
 
@@ -245,46 +172,31 @@ function openPost(type, index) {
 }
 
 function createGallery(type) {
-	var gallery, posts, texts, likes, comments, shares, isVideo;
+	var gallery, selectedGallery;
 
 	if(type == "photo") {
 		gallery = photosGallery;
-		posts = photos;
-		texts = photoTexts;
-		likes = photoLikes;
-		comments = photoComments;
-		shares = photoShares;
-		isVideo = false;
+		selectedGallery = galleryData.photo;
 	}
 	else if(type == "video") {
 		gallery = videosGallery;
-		posts = videos;
-		texts = videoTexts;
-		likes = videoLikes;
-		comments = videoComments;
-		shares = videoShares;
-		isVideo = true;
+		selectedGallery = galleryData.video;
 	}
 	else if(type == "repost") {
 		gallery = repostsGallery;
-		posts = reposts;
-		texts = repostTexts;
-		likes = repostLikes;
-		comments = repostComments;
-		shares = repostShares;
-		isVideo = false;
+		selectedGallery = galleryData.repost;
 	}
 	gallery.innerHTML = "";
 
-	for(var i = 0; i < posts.length; i++) {
+	for(var i = 0; i < selectedGallery.length; i++) {
 		var galleryPost = document.createElement("div");
 		galleryPost.className = "galleryPost";
 		var image = document.createElement("img");
 
-		if(isVideo)
-			image.src = posts[i].thumbnail;
+		if(type == "video")
+			image.src = selectedGallery[i].thumbnail;
 		else
-			image.src = posts[i];
+			image.src = selectedGallery[i].src;
 
 		galleryPost.appendChild(image);
 		gallery.appendChild(galleryPost);
@@ -380,7 +292,7 @@ function showEditFields() {
 	document.getElementById("editContact").style.display = "block";
 	document.getElementById("editBio").style.display = "block";
 
-	// default values
+	// pre-exisiting as placeholders
 	document.getElementById("editUserID").value = user.userID;
 	document.getElementById("editName").value = user.name;
 	document.getElementById("editAge").value = user.age;
@@ -473,26 +385,18 @@ cancelCaptionBtn.onclick = function() {
 saveCaptionBtn.onclick = function() {
 	var newCaption = editCaption.value;
 
-	if(currentPostType == "photo") {
-		photoTexts[currentPostIndex] = newCaption;
+	if(currentPostType == "photo") 
+		galleryData.photo[currentPostIndex].caption = newCaption;
+	else if(currentPostType == "video")
+		galleryData.video[currentPostIndex].caption = newCaption;
 
-		if(currentPostIndex >= 4) { // if newly uploaded
-			var uploadedIndex = currentPostIndex - 4;
-			if(uploadedPhotos[uploadedIndex] != null)
-				uploadedPhotos[uploadedIndex].caption = newCaption;
-		}
-
-		localStorage.setItem("veloraPhotoCaptions", JSON.stringify(photoTexts));
-		localStorage.setItem("veloraUploadedPhotos", JSON.stringify(uploadedPhotos));
-	}
-	else if(currentPostType == "video") {
-		videoTexts[currentPostIndex] = newCaption;
-		localStorage.setItem("veloraVideoCaptions", JSON.stringify(videoTexts));
-	}
-
+	localStorage.setItem("veloraGallery", JSON.stringify(galleryData));
 	document.getElementById("postText").innerHTML = newCaption;
 	postEditArea.style.display = "none";
-	editCaptionBtn.style.display = "inline-block";
+	if(currentPostType == "repost")
+		editCaptionBtn.style.display = "none";
+	else
+		editCaptionBtn.style.display = "inline-block";
 
 	// rebuild galleries
 	createGallery("photo");
@@ -520,36 +424,30 @@ photoInput.onchange = function() {
 			caption = "";
 
 		var newPhoto = {
-			image: imageData,
+			src: imageData,
 			caption: caption,
 			likes: 0,
 			comments: 0,
 			shares: 0
 		};
 
-
-		uploadedPhotos.push(newPhoto);
-		localStorage.setItem("veloraUploadedPhotos", JSON.stringify(uploadedPhotos));
-		photos.push(newPhoto.image);
-		photoTexts.push(newPhoto.caption);
-		photoLikes.push(0);
-		photoComments.push(0);
-		photoShares.push(0);
-
-		localStorage.setItem("veloraPhotoCaptions", JSON.stringify(photoTexts));
-		document.getElementById("posts").innerHTML = photos.length + videos.length;
+		galleryData.photo.push(newPhoto);
+		localStorage.setItem("veloraGallery", JSON.stringify(galleryData));
+		document.getElementById("posts").innerHTML = galleryData.photo.length + galleryData.video.length;
 		createGallery("photo");
 		photoInput.value = "";
 	};
 	reader.readAsDataURL(file);
 };
 
+// PEOPLE POPUP
 var followersDetail = document.getElementById("followersDetail");
 var followingDetail = document.getElementById("followingDetail");
 var friendsDetail = document.getElementById("friendsDetail");
 var popupBackground = document.getElementById("popupBackground");
 var popupTitle = document.getElementById("popupTitle");
 var closePopup = document.getElementById("closePopup");
+var closePost = document.getElementById("closePost");
 var peopleList = document.getElementById("peopleList");
 
 function showPeople(people) {
@@ -574,19 +472,19 @@ function showPeople(people) {
 
 followersDetail.onclick = function() {
 	popupTitle.innerHTML = "Followers";
-	showPeople(followers);
+	showPeople(allPeople.followers);
 	popupBackground.style.display = "flex";
 };
 
 followingDetail.onclick = function() {
 	popupTitle.innerHTML = "Following";
-	showPeople(following);
+	showPeople(allPeople.following);
 	popupBackground.style.display = "flex";
 };
 
 friendsDetail.onclick = function() {
 	popupTitle.innerHTML = "Friends";
-	showPeople(friends);
+	showPeople(allPeople.friends);
 	popupBackground.style.display = "flex";
 };
 
@@ -594,7 +492,7 @@ closePopup.onclick = function() {
 	popupBackground.style.display = "none";
 };
 
-document.getElementById("closePost").onclick = function() {
+closePost.onclick = function() {
 	postBackground.style.display = "none";
 };
 
