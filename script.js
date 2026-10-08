@@ -1,3 +1,10 @@
+/* localStorage Keys :
+	veloraUser
+	veloraPhotoCaptions
+	veloraVideoCaptions
+	veloraUploadedPhotos
+*/
+
 // hardcoded data
 var user = {
 	userID: "max.xavier33",
@@ -126,16 +133,13 @@ var repostComments = [10, 17, 5];
 var photoShares = [8, 4, 16, 3];
 var videoShares = [20, 12];
 var repostShares = [7, 11, 2];
+// end of hardcoded data
 
 
 var savedPhotoTexts = localStorage.getItem("veloraPhotoCaptions");
 var savedVideoTexts = localStorage.getItem("veloraVideoCaptions");
-if(savedPhotoTexts != null) {
-	var savedPhotos = JSON.parse(savedPhotoTexts);
-	for(var i = 0; i < photos.length; i++)
-		if(savedPhotos[i] != null)
-			photoTexts[i] = savedPhotos[i];
-}
+if(savedPhotoTexts != null)
+	photoTexts = JSON.parse(savedPhotoTexts);
 if(savedVideoTexts != null)
 	videoTexts = JSON.parse(savedVideoTexts);
 
@@ -185,12 +189,36 @@ var currentPostType = null;
 var currentPostIndex = null;
 
 
-function openPost(image, video, text, likes, comments, shares, type, index) {
+function openPost(type, index) {
 	postBackground.style.display = "flex";
 	currentPostType = type;
 	currentPostIndex = index;
 	var postImage = document.querySelector(".postImage");
 	postImage.innerHTML = "";
+	var image, video = null, text, likes, comments, shares;
+
+	if(type == "photo") {
+		image = photos[index];
+		text = photoTexts[index];
+		likes = photoLikes[index];
+		comments = photoComments[index];
+		shares = photoShares[index];
+	}
+	else if(type == "video") {
+		image = videos[index].thumbnail;
+		video = videos[index].video;
+		text = videoTexts[index];
+		likes = videoLikes[index];
+		comments = videoComments[index];
+		shares = videoShares[index];
+	}
+	else if(type == "repost") {
+		image = reposts[index];
+		text = repostTexts[index];
+		likes = repostLikes[index];
+		comments = repostComments[index];
+		shares = repostShares[index];
+	}
 
 	if(video != null) {
 		var videoElement = document.createElement("video");
@@ -213,12 +241,41 @@ function openPost(image, video, text, likes, comments, shares, type, index) {
 	if(type == "repost")
 		document.getElementById("editCaptionBtn").style.display = "none";
 	else
-		document.getElementById("editCaptionBtn").style.display =
-			"inline-block";
+		document.getElementById("editCaptionBtn").style.display = "inline-block";
 }
 
-function createGallery( gallery, posts, texts, likes, comments, shares, isVideo, type) {
+function createGallery(type) {
+	var gallery, posts, texts, likes, comments, shares, isVideo;
+
+	if(type == "photo") {
+		gallery = photosGallery;
+		posts = photos;
+		texts = photoTexts;
+		likes = photoLikes;
+		comments = photoComments;
+		shares = photoShares;
+		isVideo = false;
+	}
+	else if(type == "video") {
+		gallery = videosGallery;
+		posts = videos;
+		texts = videoTexts;
+		likes = videoLikes;
+		comments = videoComments;
+		shares = videoShares;
+		isVideo = true;
+	}
+	else if(type == "repost") {
+		gallery = repostsGallery;
+		posts = reposts;
+		texts = repostTexts;
+		likes = repostLikes;
+		comments = repostComments;
+		shares = repostShares;
+		isVideo = false;
+	}
 	gallery.innerHTML = "";
+
 	for(var i = 0; i < posts.length; i++) {
 		var galleryPost = document.createElement("div");
 		galleryPost.className = "galleryPost";
@@ -234,38 +291,14 @@ function createGallery( gallery, posts, texts, likes, comments, shares, isVideo,
 
 		galleryPost.onclick = function() {
 			var postNumber = Array.from(gallery.children).indexOf(this);
-
-			if(isVideo) {
-				openPost(
-					posts[postNumber].thumbnail,
-					posts[postNumber].video,
-					texts[postNumber],
-					likes[postNumber],
-					comments[postNumber],
-					shares[postNumber],
-					type,
-					postNumber
-				);
-			}
-			else {
-				openPost(
-					posts[postNumber],
-					null,
-					texts[postNumber],
-					likes[postNumber],
-					comments[postNumber],
-					shares[postNumber],
-					type,
-					postNumber
-				);
-			}
+			openPost(type, postNumber);
 		};
 	}
 }
 
-createGallery(photosGallery, photos, photoTexts, photoLikes, photoComments, photoShares, false, "photo");
-createGallery(videosGallery, videos, videoTexts, videoLikes, videoComments, videoShares, true, "video");
-createGallery(repostsGallery, reposts, repostTexts, repostLikes, repostComments, repostShares, false, "repost");
+createGallery("photo");
+createGallery("video");
+createGallery("repost");
 
 var aboutBtn = document.getElementById("aboutBtn");
 var photosBtn = document.getElementById("photosBtn");
@@ -347,6 +380,7 @@ function showEditFields() {
 	document.getElementById("editContact").style.display = "block";
 	document.getElementById("editBio").style.display = "block";
 
+	// default values
 	document.getElementById("editUserID").value = user.userID;
 	document.getElementById("editName").value = user.name;
 	document.getElementById("editAge").value = user.age;
@@ -440,8 +474,7 @@ saveCaptionBtn.onclick = function() {
 	var newCaption = editCaption.value;
 
 	if(currentPostType == "photo") {
-		photoTexts[currentPostIndex] =
-			newCaption;
+		photoTexts[currentPostIndex] = newCaption;
 
 		if(currentPostIndex >= 4) { // if newly uploaded
 			var uploadedIndex = currentPostIndex - 4;
@@ -462,9 +495,9 @@ saveCaptionBtn.onclick = function() {
 	editCaptionBtn.style.display = "inline-block";
 
 	// rebuild galleries
-	createGallery(photosGallery, photos, photoTexts, photoLikes, photoComments, photoShares, false, "photo");
-	createGallery(videosGallery, videos, videoTexts, videoLikes, videoComments, videoShares, true, "video");
-	createGallery(repostsGallery, reposts, repostTexts, repostLikes, repostComments, repostShares, false, "repost");
+	createGallery("photo");
+	createGallery("video");
+	createGallery("repost");
 };
 
 var uploadPhotoBtn = document.getElementById("uploadPhotoBtn");
@@ -505,7 +538,7 @@ photoInput.onchange = function() {
 
 		localStorage.setItem("veloraPhotoCaptions", JSON.stringify(photoTexts));
 		document.getElementById("posts").innerHTML = photos.length + videos.length;
-		createGallery(photosGallery, photos, photoTexts, photoLikes, photoComments, photoShares, false, "photo");
+		createGallery("photo");
 		photoInput.value = "";
 	};
 	reader.readAsDataURL(file);
